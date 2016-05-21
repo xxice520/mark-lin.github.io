@@ -2,8 +2,6 @@
 <html lang="en">
 
 <head>
-    header('content-type: application/json; charset=utf-8');
-    header("access-control-allow-origin: *");
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -942,7 +940,22 @@
     <script src="../dist/js/sb-admin-2.js"></script>
 
     <script type="text/javascript">
-      
+    
+
+    function myFunction(arr, Lat, Lon) {
+        var out = "";
+        var i;
+        for(i = 0; i < arr.length; i++) {
+            x = Math.abs(Lat - arr[i].Lat);
+            y = Math.abs(Lon - arr[i].Lon);
+            dist = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+            dist = dist * 100000;
+            if(dist < 500){
+               out += '<p>' + arr[i].ExitName+ ' : '+ dist + '</p><br>';
+            }
+        }
+        document.getElementById("id01").innerHTML = out;
+    }
 
       function geoFindMe() {
       var output = document.getElementById("out");
@@ -950,18 +963,22 @@
         output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
         return;
       }
-      $.getJSON("exit.json", function(obj) {
-        output.innerHTML +=
-        obj.ExitName + "<br>" +
-        obj.Lon + "<br>" +
-        obj.Lat + "<br>" +
-        obj.Lon + "<br>" +
-        obj.et_update;
-      });
 
       function success(position) {
         var latitude  = position.coords.latitude;
         var longitude = position.coords.longitude;
+
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://xxice520.github.io/mark-lin.github.io/pages/exit.json";
+
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var myArr = JSON.parse(xmlhttp.responseText);
+                myFunction(myArr, latitude, longitude);
+            }
+        };
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
 
         output.innerHTML += '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
