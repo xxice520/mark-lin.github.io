@@ -950,7 +950,7 @@
         output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
         return;
       }
-      $.getJSON("exit.json", function(json) {
+      $.getJSON("exit.json", function(obj) {
         output.innerHTML +=
         obj.ExitName + "<br>" +
         obj.Lon + "<br>" +
