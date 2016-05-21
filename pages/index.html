@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-
+    header('content-type: application/json; charset=utf-8');
+    header("access-control-allow-origin: *");
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -941,19 +942,23 @@
     <script src="../dist/js/sb-admin-2.js"></script>
 
     <script type="text/javascript">
+      
+
       function geoFindMe() {
       var output = document.getElementById("out");
-
       if (!navigator.geolocation){
         output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
         return;
       }
+      $.getJSON("exit.json", function(json) {
+            output.innerHTML += json; // this will show the info it in firebug console
+      });
 
       function success(position) {
         var latitude  = position.coords.latitude;
         var longitude = position.coords.longitude;
 
-        output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+        output.innerHTML += '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
         var img = new Image();
         img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
