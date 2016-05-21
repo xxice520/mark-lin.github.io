@@ -941,7 +941,20 @@
     <script src="../dist/js/sb-admin-2.js"></script>
 
     <script type="text/javascript">
-    
+    var xmlhttp = new XMLHttpRequest();
+    var url = "http://xxice520.github.io/mark-lin.github.io/pages/exit.json";
+    var latitude;
+    var longitude;
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var myArr = JSON.parse(xmlhttp.responseText);
+            geoFindMe();
+            myFunction(myArr, latitude, longitude);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
 
     function myFunction(arr, Lat, Lon) {
         var out = "";
@@ -966,20 +979,8 @@
       }
 
       function success(position) {
-        var latitude  = position.coords.latitude;
-        var longitude = position.coords.longitude;
-
-        var xmlhttp = new XMLHttpRequest();
-        var url = "http://xxice520.github.io/mark-lin.github.io/pages/exit.json";
-
-        xmlhttp.onreadystatechange = function() {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                var myArr = JSON.parse(xmlhttp.responseText);
-                myFunction(myArr, latitude, longitude);
-            }
-        };
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
+        latitude  = position.coords.latitude;
+        longitude = position.coords.longitude;
 
         output.innerHTML += '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
