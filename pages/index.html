@@ -355,7 +355,7 @@
             strUser = who.options[who.selectedIndex].value;
 
             if(dist < 500){
-                if(dist < min && strUser == arr[i].et_update){
+                if(dist < min && strUser <= arr[i].et_update){
                     min = dist;
                     document.getElementById("entry_no").innerHTML=arr[i].ExitName;
                     document.getElementById("entry_content").innerHTML=arr[i].ExitName.split("出",1);
