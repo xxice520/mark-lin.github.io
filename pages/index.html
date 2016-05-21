@@ -365,8 +365,12 @@
     }
 
     function toWhere() {
+        var from_where = document.getElementById('from').value;
+        if(from_where != 'Current'){
+          addressToCoordF("台灣" + from_where);
+        }
         var input = document.getElementById('to').value;
-        addressToCoord("台灣" + input);
+        addressToCoordT("台灣" + input);
         var who = document.getElementById("who");
         strUser = who.options[who.selectedIndex].value;
         myFunction(myArr, from_latitude, from_longitude);
@@ -397,7 +401,7 @@
         navigator.geolocation.getCurrentPosition(success, error);
     }
 
-    function addressToCoord(addr) {
+    function addressToCoordT(addr) {
         var coord;
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({
@@ -406,8 +410,25 @@
         if (status == google.maps.GeocoderStatus.OK) {
             coord = {x:results[0].geometry.location.lat(), y:results[0].geometry.location.lng()};
             //alert(coord.x+" "+coord.y);
-            latitude = coord.x;
-            longitude = coord.y;
+            to_latitude = coord.x;
+            t0_longitude = coord.y;
+        } else {
+            alert("fail");
+        }
+        });
+        window.setTimeout(delayedLoop, 1500);
+    }
+    function addressToCoordF(addr) {
+        var coord;
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({
+        "address": addr
+        }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            coord = {x:results[0].geometry.location.lat(), y:results[0].geometry.location.lng()};
+            //alert(coord.x+" "+coord.y);
+            from_latitude = coord.x;
+            from_longitude = coord.y;
         } else {
             alert("fail");
         }
