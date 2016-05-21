@@ -53,7 +53,7 @@
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
-                                <input id="from" type="text" class="form-control" placeholder="From">
+                                <input id="from" type="text" class="form-control" placeholder="From"/>
                                 <span class="input-group-btn">
                                 <button id="btn_now" class="btn btn-default" type="button" onclick="geoFindMe()">
                                     <i class="fa fa-location-arrow"></i>
@@ -64,7 +64,7 @@
                         </li>
                         <li class="sidebar-search">
                             <!-- <div class="input-group "> -->
-                                <input id="to" type="text" class="form-control" placeholder="To">
+                                <input id="to" type="text" class="form-control" placeholder="To"/>
                                 <!-- <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">
                                     <i class="fa fa-search"></i>
@@ -76,14 +76,14 @@
                             
                             
                         </li>
-                        <li class="sidebar-search"><select class="form-control">
-                            <option>Elavator-only</option>
-                            <option>OK-with-escalator</option>
-                            <option>OK-with-stair</option>
+                        <li class="sidebar-search"><select id="who" class="form-control">
+                            <option value="3">Elavator-only</option>
+                            <option value="2">OK-with-escalator</option>
+                            <option value="1">OK-with-stair</option>
                             </select>
                         </li>
                         <li class="sidebar-search">
-                            <button id="go" type="submit" class="btn btn-info"><i class="fa fa-arrow-circle-right"></i>GO</button>
+                            <button id="go" type="submit" class="btn btn-info" onClick=toWhere()><i class="fa fa-arrow-circle-right"></i>GO</button>
                         </li>
                     </ul>
                 </div>
@@ -324,15 +324,19 @@
     <script type="text/javascript">
     var xmlhttp = new XMLHttpRequest();
     var url = "https://xxice520.github.io/mark-lin.github.io/pages/exit.json";
-    var latitude;
-    var longitude;
+    var from_latitude;
+    var from_longitude;
+    var to_latitude;
+    var to_longitude;
+    var strUser;
+    var myArr;
 
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            var myArr = JSON.parse(xmlhttp.responseText);
+            myArr = JSON.parse(xmlhttp.responseText);
             var Lat = 25.0139212; 
             var Lon = 121.4638041;
-            myFunction(myArr, Lat, Lon);
+            //myFunction(myArr, Lat, Lon);
         }
     };
     xmlhttp.open("GET", url, true);
@@ -347,9 +351,10 @@
             dist = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
             dist = dist * 100000;
             var min = 500;
-            var id
+            var who = document.getElementById("who");
+            strUser = who.options[who.selectedIndex].value;
             if(dist < 500){
-                if(dist < min){
+                if(dist < min && strUser == arr[i].et_update){
                     min = dist;
                     document.getElementById("entry_no").innerHTML=arr[i].ExitName;
                     document.getElementById("entry_content").innerHTML=arr[i].ExitName.split("出",1);
@@ -357,40 +362,45 @@
                 }
             }
         }
+    }
 
-        document.getElementById("id01").innerHTML = out;
+    function toWhere() {
+        var input = document.getElementById('to').value;
+        addressToCoord("台灣" + input);
+        var who = document.getElementById("who");
+        strUser = who.options[who.selectedIndex].value;
+        myFunction(myArr, from_latitude, from_longitude);
+
     }
 
     function geoFindMe() {
-        var output = document.getElementById("out");
         if (!navigator.geolocation){
             output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
             return;
-    }
+        }
 
-    function success(position) {
-        latitude  = position.coords.latitude;
-        longitude = position.coords.longitude;
+        function success(position) {
+            from_latitude  = position.coords.latitude;
+            from_longitude = position.coords.longitude;
 
-        document.getElementById('btn_now').innerHTML = "Current"
+            document.getElementById('btn_now').innerHTML = "Current"
 
-        //output.innerHTML += '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+            //output.innerHTML += '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
-        var img = new Image();
-        img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+            var img = new Image();
+            img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
 
-        document.getElementById('from').value = "Current";
-        alert("HI");
-        //output.appendChild(img);
-    };
+            document.getElementById('from').value = "Current";
+            //output.appendChild(img);
+        };
 
-    function error() {
-        output.innerHTML = "Unable to retrieve your location";
-    };
+        function error() {
+            //output.innerHTML = "Unable to retrieve your location";
+        };
 
-    output.innerHTML = "<p>Locating…</p>";
+        //output.innerHTML = "<p>Locating…</p>";
 
-    navigator.geolocation.getCurrentPosition(success, error);
+        navigator.geolocation.getCurrentPosition(success, error);
     }
 
     function addressToCoord(addr) {
@@ -410,9 +420,6 @@
         });
         window.setTimeout(delayedLoop, 1500);
     }
-    </script>
-    <script>
-        addressToCoord("台灣"+"故宮博物館");
     </script>
 
 </body>
