@@ -426,9 +426,8 @@
         }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             coord = {x:results[0].geometry.location.lat(), y:results[0].geometry.location.lng()};
-            //alert(coord.x+" "+coord.y);
             from_latitude = coord.x;
-            from_longitude = coord.y;
+            from_longitude = coord.y; 
         } else {
             alert("fail");
         }
