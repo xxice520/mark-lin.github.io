@@ -55,7 +55,7 @@
                             <div class="input-group custom-search-form">
                                 <input id="from" type="text" class="form-control" placeholder="From">
                                 <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
+                                <button id="btn_now" class="btn btn-default" type="button" onclick="geoFindMe()">
                                     <i class="fa fa-location-arrow"></i>
                                 </button>
                             </span>
@@ -85,17 +85,12 @@
                         <li class="sidebar-search">
                             <button id="go" type="submit" class="btn btn-info"><i class="fa fa-arrow-circle-right"></i>GO</button>
                         </li>
-                        <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-<<<<<<< HEAD
     <div id="page-wrapper">
       <div class="row">
         <div class="col-lg-12">
@@ -195,10 +190,10 @@
                 <li>
                   <div class="timeline-panel">
                     <div class="timeline-heading">
-                      <h4 class="timeline-title text-uppercase">entry no.</h4>
+                      <h4 id="entry_no"class="timeline-title text-uppercase">entry no.</h4>
                     </div>
                     <div class="timeline-body">
-                      <p>content</p>
+                      <p id="entry_content">content</p>
                     </div>
                   </div>
                 </li>
@@ -206,28 +201,10 @@
                   <div class="timeline-badge info">MRT</div>
                   <div class="timeline-panel">
                     <div class="timeline-heading">
-                      <h4 class="timeline-title text-uppercase">mrt 1</h4>
+                      <h4 id="mrt_1" class="timeline-title text-uppercase">mrt 1</h4>
                     </div>
                     <div class="timeline-body">
                       <p>content</p>
-                      <hr />
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"></button>
-                        <ul class="dropdown-menu" role="menu">
-                          <li>
-                            <a href="#">Action</a>
-                          </li>
-                          <li>
-                            <a href="#">Another action</a>
-                          </li>
-                          <li>
-                            <a href="#">Something else here</a>
-                          </li>
-                          <li>
-                            <a href="#">Separated link</a>
-                          </li>
-                        </ul>
-                      </div>
                     </div>
                   </div>
                 </li>
@@ -369,10 +346,18 @@
             y = Math.abs(Lon - arr[i].Lon);
             dist = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
             dist = dist * 100000;
+            var min = 500;
+            var id
             if(dist < 500){
-               out += '<p>' + arr[i].ExitName+ ' : '+ Math.round(dist) + 'm</p><br>';
+                if(dist < min){
+                    min = dist;
+                    document.getElementById("entry_no").innerHTML=arr[i].ExitName;
+                    document.getElementById("entry_content").innerHTML=arr[i].ExitName.split("出",1);
+                    document.getElementById("mrt_1").innerHTML=arr[i].ExitName.split("出",1);
+                }
             }
         }
+
         document.getElementById("id01").innerHTML = out;
     }
 
@@ -387,12 +372,16 @@
         latitude  = position.coords.latitude;
         longitude = position.coords.longitude;
 
-        output.innerHTML += '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+        document.getElementById('btn_now').innerHTML = "Current"
+
+        //output.innerHTML += '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
         var img = new Image();
         img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
 
-        output.appendChild(img);
+        document.getElementById('from').value = "Current";
+        alert("HI");
+        //output.appendChild(img);
     };
 
     function error() {
@@ -413,8 +402,8 @@
         if (status == google.maps.GeocoderStatus.OK) {
             coord = {x:results[0].geometry.location.lat(), y:results[0].geometry.location.lng()};
             //alert(coord.x+" "+coord.y);
-            document.getElementById("coord").innerHTML = coord.x +" "+coord.y;
-
+            latitude = coord.x;
+            longitude = coord.y;
         } else {
             alert("fail");
         }
@@ -423,7 +412,7 @@
     }
     </script>
     <script>
-        addressToCoord("台灣"+"板橋");
+        addressToCoord("台灣"+"故宮博物館");
     </script>
 
 </body>
