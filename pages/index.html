@@ -384,12 +384,6 @@
             from_longitude = position.coords.longitude;
 
             myFunction(myArr, from_latitude, from_longitude);
-
-            //output.innerHTML += '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
-
-            var img = new Image();
-            img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
-
             document.getElementById('from').value = "Current";
             //output.appendChild(img);
         };
