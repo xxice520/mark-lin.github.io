@@ -353,6 +353,10 @@
             var min = 500;
             var who = document.getElementById("who");
             strUser = who.options[who.selectedIndex].value;
+
+            document.getElementById("entry_no").innerHTML='';
+            document.getElementById("entry_content").innerHTML='';
+            document.getElementById("mrt_1").innerHTML='';
             if(dist < 500){
                 if(dist < min && strUser == arr[i].et_update){
                     min = dist;
@@ -360,11 +364,6 @@
                     document.getElementById("entry_content").innerHTML=arr[i].ExitName.split("出",1);
                     document.getElementById("mrt_1").innerHTML=arr[i].ExitName.split("出",1);
                 }
-            }
-            if(min == 500){
-              document.getElementById("entry_no").innerHTML='';
-              document.getElementById("entry_content").innerHTML='';
-              document.getElementById("mrt_1").innerHTML='';
             }
         }
     }
