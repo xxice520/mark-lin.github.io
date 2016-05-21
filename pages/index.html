@@ -949,8 +949,9 @@
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var myArr = JSON.parse(xmlhttp.responseText);
-            geoFindMe();
-            myFunction(myArr, latitude, longitude);
+            var Lat = 25.0139212; 
+            var Lon = 121.4638041;
+            myFunction(myArr, Lat, Lon);
         }
     };
     xmlhttp.open("GET", url, true);
