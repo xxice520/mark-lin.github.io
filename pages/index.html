@@ -411,7 +411,7 @@
             coord = {x:results[0].geometry.location.lat(), y:results[0].geometry.location.lng()};
             //alert(coord.x+" "+coord.y);
             to_latitude = coord.x;
-            t0_longitude = coord.y;
+            to_longitude = coord.y;
         } else {
             alert("fail");
         }
@@ -428,6 +428,7 @@
             coord = {x:results[0].geometry.location.lat(), y:results[0].geometry.location.lng()};
             from_latitude = coord.x;
             from_longitude = coord.y; 
+            myFunction(myArr, from_latitude, from_longitude);
         } else {
             alert("fail");
         }
