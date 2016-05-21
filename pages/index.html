@@ -951,7 +951,12 @@
         return;
       }
       $.getJSON("exit.json", function(json) {
-            output.innerHTML += json; // this will show the info it in firebug console
+        output.innerHTML +=
+        obj.ExitName + "<br>" +
+        obj.Lon + "<br>" +
+        obj.Lat + "<br>" +
+        obj.Lon + "<br>" +
+        obj.et_update;
       });
 
       function success(position) {
