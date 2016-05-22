@@ -186,7 +186,7 @@
                 <li>
                   <div class="timeline-panel">
                     <div class="timeline-heading">
-                      <h4 id="entry_no"class="timeline-title text-uppercase">entry no.</h4>
+                      <h4 id="entry_no1"class="timeline-title text-uppercase">entry no.</h4>
                     </div>
                     <div class="timeline-body">
                       <p id="entry_content">content</p>
@@ -218,7 +218,7 @@
                   <div class="timeline-badge success">MRT</div>
                   <div class="timeline-panel">
                     <div class="timeline-heading">
-                      <h4 class="timeline-title text-uppercase">mrt 2</h4>
+                      <h4 id='mrt_2' class="timeline-title text-uppercase">mrt 2</h4>
                     </div>
                     <div class="timeline-body">
                       <p>content</p>
@@ -228,10 +228,10 @@
                 <li>
                   <div class="timeline-panel">
                     <div class="timeline-heading">
-                      <h4 class="timeline-title text-uppercase">exit no.</h4>
+                      <h4 id='exit_no' class="timeline-title text-uppercase">exit no.</h4>
                     </div>
                     <div class="timeline-body">
-                      <p>content</p>
+                      <p id='exit_content'>content</p>
                     </div>
                   </div>
                 </li>
@@ -335,7 +335,7 @@
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
 
-    function myFunction(arr, Lat, Lon) {
+    function myFunctionF(arr, Lat, Lon) {
         var out = "";
         var i;
         for(i = 0; i < arr.length; i++) {
@@ -350,13 +350,32 @@
             if(dist < 500){
                 if(dist < min && strUser <= arr[i].et_update){
                     min = dist;
-                    document.getElementById("entry_no").innerHTML=arr[i].ExitName;
+                    document.getElementById("entry_no1").innerHTML=arr[i].ExitName;
                     document.getElementById("entry_content").innerHTML=arr[i].ExitName.split("出",1);
                     document.getElementById("mrt_1").innerHTML=arr[i].ExitName.split("出",1);
                 }
             }
         }
-    }
+      }
+      function myFunctionT(arr, Lat, Lon) {
+        var out = "";
+        var i;
+        for(i = 0; i < arr.length; i++) {
+            x = Math.abs(Lat - arr[i].Lat);
+            y = Math.abs(Lon - arr[i].Lon);
+            dist = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+            dist = dist * 100000;
+            var min = 1000000;
+            var who = document.getElementById("who");
+            strUser = who.options[who.selectedIndex].value;
+            if(dist < min && strUser <= arr[i].et_update){
+              min = dist;
+              document.getElementById("exit_no").innerHTML=arr[i].ExitName;
+              document.getElementById("mrt_2").innerHTML=arr[i].ExitName.split("出",1);
+              document.getElementById("exit_content").innerHTML=arr[i].ExitName.split("出",1);
+            }
+        }
+      }
 
     function toWhere() {
         var from_where = document.getElementById('from').value;
@@ -367,7 +386,8 @@
         addressToCoordT("台灣" + input);
         var who = document.getElementById("who");
         strUser = who.options[who.selectedIndex].value;
-        myFunction(myArr, from_latitude, from_longitude);
+        myFunctionF(myArr, from_latitude, from_longitude);
+        myFunctionT(myArr, to_latitude, to_longitude);
 
         document.getElementById("now_content").innerHTML = from_where;
         document.getElementById("destimation").innerHTML = input;
@@ -384,7 +404,7 @@
             from_latitude  = position.coords.latitude;
             from_longitude = position.coords.longitude;
 
-            myFunction(myArr, from_latitude, from_longitude);
+            myFunctionF(myArr, from_latitude, from_longitude);
             document.getElementById('from').value = "Current";
             //output.appendChild(img);
         };
@@ -409,6 +429,7 @@
             //alert(coord.x+" "+coord.y);
             to_latitude = coord.x;
             to_longitude = coord.y;
+            myFunctionT(myArr, to_latitude, to_longitude);
         } else {
             alert("fail");
         }
