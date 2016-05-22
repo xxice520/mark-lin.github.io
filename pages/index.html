@@ -369,7 +369,7 @@
             var who = document.getElementById("who");
             strUser = who.options[who.selectedIndex].value;
 
-            if(dist < 1000){
+            if(dist < 1500){
               if(dist < min && strUser <= arr[i].et_update){
                 min = dist;
                 document.getElementById("exit_no").innerHTML=arr[i].ExitName;
@@ -407,13 +407,13 @@
             from_latitude  = position.coords.latitude;
             from_longitude = position.coords.longitude;
 
-            myFunctionF(myArr, from_latitude, from_longitude);
             document.getElementById('from').value = "Current";
+            myFunctionF(myArr, from_latitude, from_longitude);
             //output.appendChild(img);
         };
 
         function error() {
-            //output.innerHTML = "Unable to retrieve your location";
+            alert("Unable to retrieve your location");
         };
 
         //output.innerHTML = "<p>Locating…</p>";
