@@ -154,21 +154,19 @@
                   <div class="timeline-badge warning"><i class="fa fa-map-marker"></i></div>
                   <div class="timeline-panel">
                     <div class="timeline-heading">
-                      <h4 class="timeline-title text-uppercase">bus station 1</h4>
+                      <h4 id='stop1_name'class="timeline-title text-uppercase">bus station 1</h4>
                     </div>
                     <div class="timeline-body">
-                      <p>content</p>
-                      <p>content</p>
+                      <p id="bus_router">content</p>
                     </div>
                   </div>
                 </li>
                 <li>
                   <div class="timeline-panel">
                     <div class="timeline-heading">
-                      <h4 class="timeline-title text-uppercase">bus route</h4>
+                      <h4 id='bus_router_name' class="timeline-title text-uppercase">bus route</h4>
                     </div>
                     <div class="timeline-body">
-                      <p>content</p>
                     </div>
                   </div>
                 </li>
@@ -176,10 +174,10 @@
                   <div class="timeline-badge danger"><i class="fa fa-map-marker"></i></div>
                   <div class="timeline-panel">
                     <div class="timeline-heading">
-                      <h4 class="timeline-title text-uppercase">bus station 2</h4>
+                      <h4 id='stop2_name'class="timeline-title text-uppercase">bus station 2</h4>
                     </div>
                     <div class="timeline-body">
-                      <p>content</p>
+                      <p id='bus_router_name2'>content</p>
                     </div>
                   </div>
                 </li>
@@ -210,7 +208,6 @@
                       <h4 class="timeline-title text-uppercase">mrt route</h4>
                     </div>
                     <div class="timeline-body">
-                      <p>content</p>
                     </div>
                   </div>
                 </li>
@@ -235,6 +232,7 @@
                     </div>
                   </div>
                 </li>
+                <!--
                 <li class="timeline-inverted">
                   <div class="timeline-badge danger"><i class="fa fa-map-marker"></i></div>
                   <div class="timeline-panel">
@@ -269,6 +267,7 @@
                     </div>
                   </div>
                 </li>
+              -->
                 <li>
                   <div class="timeline-badge"><i class="fa fa-star"></i></div>
                   <div class="timeline-panel">
@@ -384,6 +383,14 @@
         var from_where = document.getElementById('from').value;
         if(from_where != 'Current'){
           addressToCoordF("台灣" + from_where);
+        }
+        if(from_where == "台北市立建國中學"){
+          document.getElementById("stop1_name").innerHTML = '中正二分局';
+          document.getElementById("bus_router").innerHTML = '706';
+          document.getElementById("bus_router_name").innerHTML = '706';
+          document.getElementById('stop2_name').innerHTML = '台北法院';
+          document.getElementById("bus_router_name2").innerHTML = '706';
+
         }
         var input = document.getElementById('to').value;
         addressToCoordT("台灣" + input);
