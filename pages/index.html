@@ -341,9 +341,9 @@
         for(i = 0; i < arr.length; i++) {
             x = Math.abs(Lat - arr[i].Lat);
             y = Math.abs(Lon - arr[i].Lon);
-            dist = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+            var dist = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
             dist = dist * 100000;
-            var min = 500;
+            var min = 1000000;
             var who = document.getElementById("who");
             strUser = who.options[who.selectedIndex].value;
 
@@ -363,16 +363,19 @@
         for(i = 0; i < arr.length; i++) {
             x = Math.abs(Lat - arr[i].Lat);
             y = Math.abs(Lon - arr[i].Lon);
-            dist = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+            var dist = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
             dist = dist * 100000;
             var min = 1000000;
             var who = document.getElementById("who");
             strUser = who.options[who.selectedIndex].value;
-            if(dist < min && strUser <= arr[i].et_update){
-              min = dist;
-              document.getElementById("exit_no").innerHTML=arr[i].ExitName;
-              document.getElementById("mrt_2").innerHTML=arr[i].ExitName.split("出",1);
-              document.getElementById("exit_content").innerHTML=arr[i].ExitName.split("出",1);
+
+            if(dist < 1000){
+              if(dist < min && strUser <= arr[i].et_update){
+                min = dist;
+                document.getElementById("exit_no").innerHTML=arr[i].ExitName;
+                document.getElementById("mrt_2").innerHTML=arr[i].ExitName.split("出",1);
+                document.getElementById("exit_content").innerHTML=arr[i].ExitName.split("出",1);
+              }
             }
         }
       }
